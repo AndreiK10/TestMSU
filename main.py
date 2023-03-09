@@ -15,7 +15,8 @@ default_settings = {
     "freq_x": 2,
     "freq_y": 3,
     "color": "midnightblue",
-    "width": 2
+    "width": 1,
+    "rezol": 20
 }
 
 
@@ -77,6 +78,7 @@ class LissajousWindow(qt.QMainWindow):
         settings["freq_y"] = float(self.freq_y_lineedit.text())
         settings["color"] = mpl_color_dict[self.color_combobox.currentText()]
         settings["width"] = int(self.width_combobox.currentText())
+        settings["rezol"] = int(self.freq_rezol_lineedit.text())
 
         # Перестраиваем график
         self.plot_lissajous_figure(settings)
@@ -91,6 +93,7 @@ class LissajousWindow(qt.QMainWindow):
 
         # Генерируем сигнал для построения
         self.generator = LissajousGenerator()
+        self.generator.set_resolution(settings["rezol"])
         figure = self.generator.generate_figure(settings["freq_x"],
                                                 settings["freq_y"])
 
