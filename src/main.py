@@ -21,7 +21,8 @@ default_settings = {
 
 
 # Цвета для matplotlib
-with open("mpl.json", mode="r", encoding='utf-8') as f: 
+currentdir = os.path.dirname(os.path.realpath(__file__))
+with open(os.path.join(currentdir,"mpl.json"), mode="r", encoding='utf-8') as f: 
     mpl_color_dict= json.load(f)
 
 
@@ -31,10 +32,10 @@ class LissajousWindow(qt.QMainWindow):
         super(LissajousWindow, self).__init__()
 
         # Загружаем интерфейс из файла
-        uic.loadUi("main_window.ui", self)
+        uic.loadUi(os.path.join(currentdir,"main_window.ui"), self)
 
         # Ставим версию и иконку
-        with open("version.txt", "r") as f:
+        with open(os.path.join(currentdir,"version.txt"), "r") as f:
             version = f.readline()
         self.setWindowTitle("Генератор фигур Лиссажу. Версия {}. CC BY-SA 4.0 Ivanov".format(
             version
@@ -93,7 +94,8 @@ class LissajousWindow(qt.QMainWindow):
 
         # Генерируем сигнал для построения
         self.generator = LissajousGenerator()
-        self.generator.set_resolution(settings["rezol"])
+        #устанавливаем разрешение в количестве точек
+        self.generator.set_resolution(settings["rezol"]) 
         figure = self.generator.generate_figure(settings["freq_x"],
                                                 settings["freq_y"])
 
@@ -121,7 +123,6 @@ class LissajousWindow(qt.QMainWindow):
         
         self._fig.savefig(file_path)
 
-        #raise NotImplementedError("Тут всего одной строчки не хватает.")
 
 
 if __name__ == "__main__":
