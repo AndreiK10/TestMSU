@@ -121,7 +121,6 @@ class LissajousWindow(qt.QMainWindow):
         
         self._fig.savefig(file_path)
 
-#sas
         #raise NotImplementedError("Тут всего одной строчки не хватает.")
 
 
