@@ -2,7 +2,7 @@ import sys
 import os
 import PyQt5.QtWidgets as qt
 from PyQt5 import uic, QtGui
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAggBase as FigureCanvas
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import numpy as np
 import json
@@ -20,8 +20,9 @@ default_settings = {
 
 
 # Цвета для matplotlib
-with open("mpl.json", mode="r") as f:
-    mpl_color_dict = json.load(f)
+with open("mpl.json", mode="r", encoding='utf-8') as f: 
+    mpl_color_dict= json.load(f)
+
 
 
 class LissajousWindow(qt.QMainWindow):
@@ -107,15 +108,18 @@ class LissajousWindow(qt.QMainWindow):
 
     def save_button_click_handler(self):
         """
-        Обработчик нажатия на кнопку сохранения настроек
+        Обработчик нажатия на кнопку сохранения настроек 
         """
         file_path, _ = qt.QFileDialog.getSaveFileName(self, "Сохранение изображения", "C:\\",
                                                             "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*) ")
 
         if file_path == "":
             return
+        
+        self._fig.savefig(file_path)
 
-        raise NotImplementedError("Тут всего одной строчки не хватает.")
+#sas
+        #raise NotImplementedError("Тут всего одной строчки не хватает.")
 
 
 if __name__ == "__main__":
